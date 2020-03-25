@@ -34,4 +34,4 @@ def return_time():
     return jsonify(time_dict)
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=30180)
+    app.run(host='0.0.0.0', port=80)
