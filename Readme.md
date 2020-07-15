@@ -18,3 +18,6 @@ http://<server_ip>:<port>/time/<timezone_name>
 Returns the time for the desired timezone.  Example:
 
 http://<server_ip>:<port>/time/america/chicago
+
+###
+Prebuilt docker image at https://hub.docker.com/r/entropysynthetica/timeapi
