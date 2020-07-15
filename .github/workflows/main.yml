@@ -2,30 +2,30 @@ name: Build and Push to Registry
 
 # Trigger on push to master branch
 on:
-    push:
+  push:
     branches:
-    - master
+      - master
 
 jobs:
 
-    build: 
-        runs-on: ubuntu-latest
+  build: 
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-            - name: Build Image
-              run: docker build -t entropysynthetica/timeapi:latest .
+      - name: Build Image
+        run: docker build -t entropysynthetica/timeapi:latest .
 
-    push:
-        needs: build
-        runs-on: ubuntu-latest
+  push:
+    needs: build
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v2
+    steps:
+      - uses: actions/checkout@v2
 
-            - name: Log into Dockerhub Registry
-              run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username  ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
+      - name: Log into Dockerhub Registry
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username  ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
-            - name: Push into Repo
-              run: docker push entropysynthetica/timeapi:latest
+      - name: Push into Repo
+        run: docker push entropysynthetica/timeapi:latest
