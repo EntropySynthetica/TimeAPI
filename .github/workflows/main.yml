@@ -1,14 +1,10 @@
 name: Build and Push to Registry
 
-# Trigger on push to master branch
-on:
-  push:
-    branches:
-      - master
+# Trigger on push or pull_request
+on: [push, pull_request]
 
 jobs:
-
-  push:
+  push_and_build:
     runs-on: ubuntu-latest
 
     steps:
