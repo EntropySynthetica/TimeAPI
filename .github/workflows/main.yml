@@ -3,18 +3,23 @@ name: Build and Push to Registry
 # Trigger on push or pull_request
 on: [push, pull_request]
 
+# Jobs to run when the trigger matches.
 jobs:
   push_and_build:
     runs-on: ubuntu-latest
 
     steps:
+      # Github marketplace action to check out our code.
       - uses: actions/checkout@v2
 
+      # Build our image from the dockerfile.
       - name: Build Image
         run: docker build -t entropysynthetica/timeapi:latest .
 
+      # Login to Dockerhub with our username and token.
       - name: Log into Dockerhub Registry
         run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username  ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
 
-      - name: Push into Repo
+      # Push the image we built into the registry
+      - name: Push into Registry
         run: docker push entropysynthetica/timeapi:latest
