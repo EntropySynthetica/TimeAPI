@@ -3,10 +3,10 @@
 A simple Rest server to provide the current time for IOT projects.  Inspired by worldtimeapi.org
 
 ### To Build
-`docker build -t timeapi:1.0 .`
+`docker build -t timeapi .`
 
 ### To Run
-`docker run -d -p 30180:80 timeapi:1.0`
+`docker run -d -p 30180:80 --name timeapi timeapi`
 
 ### To access
 http://<server_ip>:<port>/time
