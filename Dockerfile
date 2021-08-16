@@ -2,9 +2,7 @@ FROM python:3.9.6-alpine3.14
 
 WORKDIR /app
 
-RUN apk add tzdata
-RUN cp /usr/share/zoneinfo/America/Chicago /etc/localtime
-RUN echo "America/Chicago" >  /etc/timezone
+RUN apk add tzdata && cp /usr/share/zoneinfo/America/Chicago /etc/localtime && echo "America/Chicago" >  /etc/timezone
 
 ENV TZ America/Chicago
 
