@@ -1,7 +1,10 @@
-name: Build and Push to Registry
+name: Build and Push to Dockerhub
 
-# Trigger on push or pull_request
-on: [push, pull_request]
+# Trigger on a Semantic Git Tag
+on:
+  push:
+    tags:
+      - '*.*.*'
 
 # Jobs to run when the trigger matches.
 jobs:
@@ -9,17 +12,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Github marketplace action to check out our code.
       - uses: actions/checkout@v2
 
-      # Build our image from the dockerfile.
-      - name: Build Image
-        run: docker build -t entropysynthetica/timeapi:latest .
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      # Login to Dockerhub with our username and token.
-      - name: Log into Dockerhub Registry
-        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login --username  ${{ secrets.DOCKERHUB_USERNAME }} --password-stdin
-
-      # Push the image we built into the registry
-      - name: Push into Registry
-        run: docker push entropysynthetica/timeapi:latest
+      - name: Build and push to Dockerhub
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: true
+          no-cache: true
+          tags: entropysynthetica/timeapi:${{ github.ref_name }}
